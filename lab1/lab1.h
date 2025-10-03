@@ -1,0 +1,41 @@
+#ifndef LAB1_H
+#define LAB1_H
+
+#include <functional>
+
+typedef double F64;
+typedef int I32;
+
+enum class search_method_type {
+    bisection
+};
+
+struct search_result {
+    F64 result;
+    F64 accuracy;
+    I32 iterations;
+    I32 function_probes;
+    search_method_type type;
+
+    void clear() {
+        result = 0;
+        accuracy = 0;
+        iterations = 0;
+        function_probes = 0;
+    }
+};
+
+typedef F64(*function_1d)(F64);
+
+namespace lab1 {
+    void bisect(
+            search_result & result,
+            function_1d function,
+            F64 left,
+            F64 right,
+            F64 eps = 1e-6,
+            I32 max_iterations = 1000
+    );
+}
+
+#endif
