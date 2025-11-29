@@ -5,4 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(untitled main.cpp
         lab1/lab1.cpp
-        lab1/lab1.h)
+        lab1/lab1.h
+        lab2/lab2.cpp
+        lab2/lab2.h
+        numerics/vector_f64.h
+        numerics/matrix_f64.h)

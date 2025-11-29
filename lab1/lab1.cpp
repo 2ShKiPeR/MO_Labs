@@ -73,12 +73,12 @@ void golden_ratio(
     result.function_probes = result.iterations + 2;
 }
 
-void fibonacci(
-    search_result & result,
-    function_1d function,
-    F64 left,
-    F64 right,
-    F64 eps)
+    void fibonacci(
+     search_result & result,
+     function_1d function,
+     F64 left,
+     F64 right,
+     F64 eps)
 {
     result.clear();
     result.type = search_method_type::fibonacchi;
@@ -130,5 +130,6 @@ void fibonacci(
     result.result = (right + left) * 0.5;
     result.accuracy = (right - left);
 }
+
 
 } // namespace lab1
