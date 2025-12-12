@@ -16,7 +16,7 @@ double rosenbrock_function(const numerics::vector_f64& x) {
 }
 
 int main() {
-    std::cout << "=== Lab 2: Multidimensional Search Methods (Fibonacci in Coordinate Descent) ===" << std::endl;
+    std::cout << "=== Lab 2: Multidimensional Search Methods (Golden Ratio in Coordinate Descent) ===" << std::endl;
 
     multidim_search_result result;
 
@@ -47,13 +47,17 @@ int main() {
     std::cout << "Iterations: " << result.iterations << std::endl;
     std::cout << "Function probes: " << result.function_probes << std::endl;
 
-    // Тест 4: Покоординатный спуск С ФИБОНАЧЧИ (основной тест)
-    std::cout << "\n4. Coordinate Descent with Fibonacci Method (Rosenbrock):" << std::endl;
+    // Тест 4: Покоординатный спуск С ЗОЛОТЫМ СЕЧЕНИЕМ (основной тест)
+    std::cout << "\n4. Coordinate Descent with GOLDEN RATIO Method (Rosenbrock):" << std::endl;
     multidim_search_result result2;
     numerics::vector_f64 start_point({-1.5, 1.5});
 
-    // Пробуем разные λ для лучшей сходимости
-    lab2::coordinate_descent(result2, rosenbrock_function, start_point, 5.0, 1e-6, 500);
+    // Оптимальные параметры для золотого сечения
+    lab2::coordinate_descent(result2, rosenbrock_function, start_point,
+                             5.0,   // λ = 5.0 (оптимально)
+                             1e-4,  // eps = 0.0001 (для скорости)
+                             200);  // max_iterations = 200
+
     std::cout << "Minimum point: (" << result2.result[0] << ", " << result2.result[1] << ")" << std::endl;
     std::cout << "Accuracy: " << result2.accuracy << std::endl;
     std::cout << "Iterations: " << result2.iterations << std::endl;
