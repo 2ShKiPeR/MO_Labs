@@ -5,6 +5,18 @@
 
 namespace lab2 {
 
+
+// Вспомогательная функция для вычисления чисел Фибоначчи
+    std::vector<double> generate_fibonacci_sequence(int n) {
+        std::vector<double> fib(n + 2);
+        fib[0] = 1.0;
+        fib[1] = 1.0;
+        for (int i = 2; i < n + 2; i++) {
+            fib[i] = fib[i - 1] + fib[i - 2];
+        }
+        return fib;
+    }
+
     void multidim_bisect(
             multidim_search_result & result,
             function_nd function,
@@ -115,16 +127,6 @@ namespace lab2 {
 
         result.result = (current_lhs + current_rhs) * 0.5;
         result.accuracy = numerics::vector_f64::distance(current_lhs, current_rhs) * 0.5;
-    }
-
-    std::vector<double> generate_fibonacci_sequence(int n) {
-        std::vector<double> fib(n + 2);
-        fib[0] = 1.0;
-        fib[1] = 1.0;
-        for (int i = 2; i < n + 2; i++) {
-            fib[i] = fib[i - 1] + fib[i - 2];
-        }
-        return fib;
     }
 
     void multidim_fibonacci(
@@ -258,15 +260,14 @@ namespace lab2 {
                     search_end_point = current_point - basis * lambda;
                 }
 
-                // Используем многомерную дихотомию для поиска минимума на отрезке
+                // Используем многомерный метод Фибоначчи для поиска минимума на отрезке
                 multidim_search_result line_search_result;
-                multidim_bisect(
+                multidim_fibonacci(
                         line_search_result,
                         function,
                         current_point,
                         search_end_point,
-                        eps,
-                        100
+                        eps
                 );
 
                 // Обновляем текущую точку

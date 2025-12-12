@@ -61,7 +61,7 @@ namespace lab2 {
             multidim_search_result & result,
             function_nd function,
             const numerics::vector_f64& start_point,
-            double lambda = 1.0,        // Длина шага из задания
+            double lambda = 1.0,
             double eps = 1e-6,
             int max_iterations = 1000
     );
