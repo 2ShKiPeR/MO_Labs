@@ -24,9 +24,6 @@ struct multidim_search_result {
 };
 
 namespace lab2 {
-    // Константа золотого сечения
-    static const double PSI = (std::sqrt(5.0) - 1.0) / 2.0;
-
     // 1. Многомерная дихотомия
     void multidim_bisect(
             multidim_search_result & result,
@@ -61,9 +58,9 @@ namespace lab2 {
             multidim_search_result & result,
             function_nd function,
             const numerics::vector_f64& start_point,
-            double lambda = 1.0,
+            double lambda = 5.0,        // с этой длиной шага получше будет
             double eps = 1e-6,
-            int max_iterations = 1000
+            int max_iterations = 500
     );
 
     // Вспомогательная функция для вычисления чисел Фибоначчи
