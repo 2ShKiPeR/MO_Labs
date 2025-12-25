@@ -20,7 +20,6 @@ int main() {
 
     multidim_search_result result;
 
-    // Тест 1: Многомерная дихотомия
     std::cout << "\n1. Multidimensional Bisection Method (Sphere):" << std::endl;
     numerics::vector_f64 lhs({-2.0, -2.0});
     numerics::vector_f64 rhs({2.0, 2.0});
@@ -31,7 +30,6 @@ int main() {
     std::cout << "Iterations: " << result.iterations << std::endl;
     std::cout << "Function probes: " << result.function_probes << std::endl;
 
-    // Тест 2: Многомерное золотое сечение
     std::cout << "\n2. Multidimensional Golden Ratio Method (Sphere):" << std::endl;
     lab2::multidim_golden_ratio(result, sphere_function, lhs, rhs, 1e-6);
     std::cout << "Minimum point: (" << result.result[0] << ", " << result.result[1] << ")" << std::endl;
@@ -39,15 +37,13 @@ int main() {
     std::cout << "Iterations: " << result.iterations << std::endl;
     std::cout << "Function probes: " << result.function_probes << std::endl;
 
-    // Тест 3: Многомерный метод Фибоначчи
     std::cout << "\n3. Multidimensional Fibonacci Method (Sphere):" << std::endl;
-    lab2::multidim_fibonacci(result, sphere_function, lhs, rhs, 1e-6);
+    lab2::multidim_fibonacci(result, sphere_function, lhs, rhs, 2*1e-6);
     std::cout << "Minimum point: (" << result.result[0] << ", " << result.result[1] << ")" << std::endl;
     std::cout << "Accuracy: " << result.accuracy << std::endl;
     std::cout << "Iterations: " << result.iterations << std::endl;
     std::cout << "Function probes: " << result.function_probes << std::endl;
 
-    // Тест 4: Покоординатный спуск С ЗОЛОТЫМ СЕЧЕНИЕМ (основной тест)
     std::cout << "\n4. Coordinate Descent with GOLDEN RATIO Method (Rosenbrock):" << std::endl;
     multidim_search_result result2;
     numerics::vector_f64 start_point({-1.5, 1.5});

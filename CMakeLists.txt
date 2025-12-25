@@ -9,4 +9,7 @@ add_executable(untitled main.cpp
         lab2/lab2.cpp
         lab2/lab2.h
         numerics/vector_f64.h
-        numerics/matrix_f64.h)
+        numerics/matrix_f64.h
+        lab3/lab3.h
+        lab3/lab3.h
+        lab3/lab3.cpp)

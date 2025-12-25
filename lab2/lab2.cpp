@@ -4,10 +4,8 @@
 #include <algorithm>
 
 namespace lab2 {
-    // Константа золотого сечения
     const double PSI = (std::sqrt(5.0) - 1.0) / 2.0;
 
-// Вспомогательная функция для вычисления чисел Фибоначчи
     std::vector<double> generate_fibonacci_sequence(int n) {
         std::vector<double> fib(n + 2);
         fib[0] = 1.0;
@@ -180,9 +178,9 @@ namespace lab2 {
                 f_xl = f_xr;
                 xr = current_lhs + (current_rhs - current_lhs) * (Ln_1 / Ln);
 
-                if (distance_xl_xr < delta) {
-                    xr = xr + dir_vector * delta;
-                }
+                // if (distance_xl_xr < delta) {
+                //                //     xr = xr + dir_vector * delta;
+                //                // }
 
                 f_xr = function(xr);
                 result.function_probes++;
@@ -191,10 +189,10 @@ namespace lab2 {
                 xr = xl;
                 f_xr = f_xl;
                 xl = current_lhs + (current_rhs - current_lhs) * ((Ln - Ln_1) / Ln);
-
-                if (distance_xl_xr < delta) {
-                    xl = xl - dir_vector * delta;
-                }
+               // if (distance_xl_xr < delta) {
+               //      xl = xl - dir_vector * delta;
+               //  }
+               //
 
                 f_xl = function(xl);
                 result.function_probes++;
@@ -218,6 +216,9 @@ namespace lab2 {
 
         int n = start_point.dimension();
         numerics::vector_f64 current_point = start_point;
+
+        double prev_function_value = function(current_point); /////
+        result.function_probes++; /////
 
         for (; result.iterations < max_iterations; result.iterations++) {
             numerics::vector_f64 old_point = current_point;
@@ -252,13 +253,28 @@ namespace lab2 {
                 current_point = line_search_result.result;
                 result.function_probes += line_search_result.function_probes;
             }
+            double current_function_value = function(current_point);
+            result.function_probes++;
 
-            double movement = numerics::vector_f64::distance(old_point, current_point);
+            double function_change = std::abs(current_function_value - prev_function_value);
+            double point_movement = numerics::vector_f64::distance(old_point, current_point);
+
+            result.accuracy = point_movement;
+
+            if (function_change < eps && point_movement < eps) {
+                break;
+            }
+
+            prev_function_value = current_function_value;
+
+
+
+            /*double movement = numerics::vector_f64::distance(old_point, current_point);
             result.accuracy = movement;
 
             if (movement < 2 * eps) {
                 break;
-            }
+            }*/
         }
 
         result.result = current_point;
