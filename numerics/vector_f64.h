@@ -4,6 +4,8 @@
 #include <vector>
 #include <cmath>
 #include <stdexcept>
+#include <functional>
+#include <iostream>
 
 namespace numerics {
 
@@ -77,6 +79,62 @@ public:
         return result;
     }
 
+    // Унарный минус
+    vector_f64 operator-() const {
+        vector_f64 result(dimension());
+        for (int i = 0; i < dimension(); i++) {
+            result[i] = -data[i];
+        }
+        return result;
+    }
+
+    // Присваивание
+    vector_f64& operator=(const vector_f64& other) {
+        if (this != &other) {
+            data = other.data;
+        }
+        return *this;
+    }
+
+    // Скалярное произведение
+    double dot(const vector_f64& other) const {
+        if (dimension() != other.dimension()) {
+            throw std::invalid_argument("Vectors must have same dimension");
+        }
+        double result = 0.0;
+        for (int i = 0; i < dimension(); i++) {
+            result += data[i] * other[i];
+        }
+        return result;
+    }
+
+    // Норма вектора
+    double norm() const {
+        double sum = 0.0;
+        for (int i = 0; i < dimension(); i++) {
+            sum += data[i] * data[i];
+        }
+        return std::sqrt(sum);
+    }
+
+    // Квадрат нормы
+    double norm_squared() const {
+        double sum = 0.0;
+        for (int i = 0; i < dimension(); i++) {
+            sum += data[i] * data[i];
+        }
+        return sum;
+    }
+
+    // Нормировка вектора
+    vector_f64 normalized() const {
+        double length = norm();
+        if (length == 0.0) {
+            throw std::invalid_argument("Cannot normalize zero vector");
+        }
+        return *this / length;
+    }
+
     // Статические методы
     static double distance(const vector_f64& a, const vector_f64& b) {
         if (a.dimension() != b.dimension()) {
@@ -112,7 +170,7 @@ public:
     }
 
     // Установка конкретной координаты
-    vector_f64 coord(int coordinate, double value) const {
+    vector_f64 with_coord(int coordinate, double value) const {
         if (coordinate < 0 || coordinate >= dimension()) {
             throw std::out_of_range("Coordinate index out of range");
         }
@@ -120,9 +178,42 @@ public:
         result[coordinate] = value;
         return result;
     }
+
+    // Вычисление градиента
+    static vector_f64 gradient(std::function<double(const vector_f64&)> function,
+                               const vector_f64& point,
+                               double dx = 1e-6) {
+        int n = point.dimension();
+        vector_f64 grad(n);
+
+        for (int i = 0; i < n; i++) {
+            vector_f64 point_plus = point;
+            vector_f64 point_minus = point;
+
+            point_plus[i] += dx;
+            point_minus[i] -= dx;
+
+            double f_plus = function(point_plus);
+            double f_minus = function(point_minus);
+
+            grad[i] = (f_plus - f_minus) / (2 * dx);
+        }
+
+        return grad;
+    }
+
+    // Вывод вектора
+    void print() const {
+        std::cout << "[";
+        for (int i = 0; i < dimension(); i++) {
+            std::cout << data[i];
+            if (i < dimension() - 1) std::cout << ", ";
+        }
+        std::cout << "]";
+    }
 };
 
-// Внешний оператор умножения скаляра на вектор
+// Внешние операторы
 inline vector_f64 operator*(double scalar, const vector_f64& vec) {
     return vec * scalar;
 }
